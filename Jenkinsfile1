@@ -1,0 +1,15 @@
+pipeline {
+   agent any
+
+
+   stages {
+       stage('LMS Code Analysis') {
+           steps {
+               echo 'Preparing Sonar Analysis'
+               sh 'cd webapp && sudo docker run --rm -e SONAR_HOST_URL="http://3.96.202.214:9000" -v ".:/usr/src" -e SONAR_TOKEN="sqp_be94b56b4b1e90620720b9230f414b728fa6f3a6" sonarsource/sonar-scanner-cli -Dsonar.projectKey=sonar-jenkins'
+               echo 'Completed Sonar Analysis'
+           }
+       }
+   }
+}
+
