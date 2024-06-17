@@ -24,9 +24,7 @@ pipeline {
                    sh "curl -v -u admin:narmad --upload-file webapp/lms-${packageJSONVersion}.zip http://35.183.126.35:8081/repository/sonar-pipeline/"
                    echo 'Completed LMS Release''
                }
-           }
-       }
-
+           } 
        stage('LMS Clean Up') {
            steps {
                echo 'Cleaning Up'
