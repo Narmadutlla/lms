@@ -1,15 +1,17 @@
+
 pipeline {
    agent any
+
 
    stages {
        stage('LMS Code Analysis') {
            steps {
                echo 'Preparing Sonar Analysis'
-               sh 'cd webapp && sudo docker run --rm -e SONAR_HOST_URL="http://99.79.58.44:9000" -v ".:/usr/src" -e SONAR_TOKEN="sqp_e2e8ce1612635a2bc37dc72fafd71540cc5bdf60" sonarsource/sonar-scanner-cli -Dsonar.projectKey=sonar-jenkins'
+               sh 'cd webapp && sudo docker run --rm -e SONAR_HOST_URL="http://35.87.47.254:9000" -v ".:/usr/src" -e SONAR_TOKEN="sqp_d54b04dba6daef43a16855921c1bda41e062e9ef" sonarsource/sonar-scanner-cli -Dsonar.projectKey=lms'
                echo 'Completed Sonar Analysis'
            }
        }
-   stage('LMS Build Artifacts') {
+       stage('LMS Build Artifacts') {
            steps {
                echo 'Preparing LMS Build'
                sh 'cd webapp && npm install && npm run build'
@@ -18,19 +20,10 @@ pipeline {
        }
        stage('LMS Release Artifacts') {
            steps {
-               script {
-                   echo 'Preparing LMS Release'
-                   sh "zip webapp/package.json.zip -r webapp/dist"
-                   sh "curl -v -u admin:narmad --upload-file webapp/lms-${packageJSONVersion}.zip http://35.183.126.35:8081/repository/sonar-pipeline/"
+                   sh "zip webapp/lms-${packageJSONVersion}.zip -r webapp/dist"
+                   sh "curl -v -u admin:lms12345 --upload-file webapp/lms-${packageJSONVersion}.zip http://35.87.47.254:8081/repository/lms/"
                    echo 'Completed LMS Release'
            }
        }
-   stage('LMS Clean Up') {
-           steps {
-               echo 'Cleaning Up'
-               cleanWs()
-           }
-       }
    }
-'}'
-
+}
