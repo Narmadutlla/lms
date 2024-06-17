@@ -25,5 +25,12 @@ pipeline {
                    echo 'Completed LMS Release'
            }
        }
+   stage('LMS Clean Up') {
+           steps {
+               echo 'Cleaning Up'
+               cleanWs()
+           }
+       }
    }
 }
+
