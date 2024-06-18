@@ -21,3 +21,16 @@ sudo usermod -aG docker-Jenkins
   sudo visudo 
 jenkins ALL=(ALL) NOPASSWD: /usr/bin/docker
 sudo systemctl restart Jenkins
+
+
+
+
+sudo docker container exec nexus cat /nexus-data/admin.password
+
+upload artifacts
+curl -v -u username:password --upload-file <file> <nexus-repo-link>
+
+download artifacts 
+curl -u username:password -X GET 'http://20.172.187.108:8081/repository/lms/lms-1.1.zip' --output lms-1.1.zip
+
+
