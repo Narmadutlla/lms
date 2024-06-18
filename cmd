@@ -28,9 +28,33 @@ sudo systemctl restart Jenkins
 sudo docker container exec nexus cat /nexus-data/admin.password
 
 upload artifacts
-curl -v -u username:password --upload-file <file> <nexus-repo-link>
+cd webapp && npm install && npm run build 
+zip lms.zip -r dist/*
+curl -v -u username:password --upload-file <file>lms.zip <nexus-repo-link>
 
+
+deploy 
 download artifacts 
 curl -u username:password -X GET 'http://20.172.187.108:8081/repository/lms/lms-1.1.zip' --output lms-1.1.zip
+unzip lms.zip
+sudo cp -r dist/* /var/www/html
+rm -rf dist 
+
+
+
+
+node -v
+npm -v
+curl -sL https://deb.nodesource.com/setup_16.x | sudo bash -
+sudo apt-get install -y nodejs
+node -v
+npm -v
+
+
+
+
+
+
+
 
 
